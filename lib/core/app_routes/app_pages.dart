@@ -2,10 +2,11 @@ import 'package:flutter/animation.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 import 'package:get/get_navigation/src/routes/transitions_type.dart';
 import 'package:personal_ai_life_assistant/core/app_routes/routes.dart';
-import 'package:personal_ai_life_assistant/faetures/home/view/home_screen.dart';
+import 'package:personal_ai_life_assistant/faetures/bottom_nav/view/bottom_nav_screen.dart';
 import '../../faetures/auth/forget_password/view/forget_password_screen.dart';
 import '../../faetures/auth/sign_up/view/sign_up_screen.dart';
 import '../../faetures/auth/signin/view/signin_screen.dart';
+import '../../faetures/schedule/view/schedule_screen.dart';
 import '../../faetures/splash/view/splash_screen.dart';
 
 class AppPages {
@@ -34,8 +35,14 @@ class AppPages {
         curve: Curves.linear,
         transitionDuration: const Duration(microseconds: 200)),
     GetPage(
+        name: AppRoutes.BOTTOMNAVSCREEN,
+        page: () => BottomNavScreen(),
+        transition: Transition.fade,
+        curve: Curves.linear,
+        transitionDuration: const Duration(microseconds: 200)),
+    GetPage(
         name: AppRoutes.HOMESCREEN,
-        page: () => HomeScreen(),
+        page: () => ScheduleScreen(),
         transition: Transition.fade,
         curve: Curves.linear,
         transitionDuration: const Duration(microseconds: 200)),

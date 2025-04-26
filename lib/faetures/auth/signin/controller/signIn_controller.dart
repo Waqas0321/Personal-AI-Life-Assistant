@@ -21,7 +21,7 @@ class SignInController extends GetxController {
           .then((value) {
             emailController.clear();
             passwordController.clear();
-            Get.offNamed(AppRoutes.HOMESCREEN);
+            Get.offNamed(AppRoutes.BOTTOMNAVSCREEN);
           });
     } catch (e) {
       log("Exception: $e");

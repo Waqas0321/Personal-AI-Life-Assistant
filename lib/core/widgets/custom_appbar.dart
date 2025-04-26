@@ -12,8 +12,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   const CustomAppBar({
     super.key,
-    this.title = "LexiLearn",
-    this.backgroundColor = AppColors.orange,
+    this.title = "Dashboard",
+    this.backgroundColor = AppColors.primary,
     this.foregroundColor = AppColors.white,
     this.fontSize = 16,this.actionsWidgets,
     this.goBack = false,

@@ -2,7 +2,6 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-
 import '../../../../core/app_routes/routes.dart';
 import '../../../../core/widgets/custom_toast_show.dart';
 import '../../../../data/models/user_model.dart';
@@ -58,7 +57,7 @@ class SignUpController extends GetxController {
                   .then(
                     (value) {
                       refreshField();
-                  Get.toNamed(AppRoutes.HOMESCREEN);
+                  Get.toNamed(AppRoutes.BOTTOMNAVSCREEN);
                 },
               );
               return null;

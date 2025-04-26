@@ -14,7 +14,7 @@ class SplashController extends GetxController {
       if (userId == null || userId.isEmpty) {
         Get.offAllNamed(AppRoutes.SIGNINSCREEN);
       } else {
-        Get.offAllNamed(AppRoutes.HOMESCREEN);
+        Get.offAllNamed(AppRoutes.BOTTOMNAVSCREEN);
       }
     });
   }
