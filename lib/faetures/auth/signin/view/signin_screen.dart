@@ -7,6 +7,7 @@ import '../../../../core/const/app_images.dart';
 import '../../../../core/utils/app_sizes.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_input_textfield.dart';
+import '../../../../core/widgets/custom_outline_button.dart';
 import '../../../../core/widgets/custom_text_widget.dart';
 import '../controller/signIn_controller.dart';
 
@@ -32,8 +33,8 @@ class SignInScreen extends StatelessWidget {
                     children: [
                       Image.asset(
                         AppImages.logo,
-                        height: appSizes.getHeightPercentage(18),
-                        width: appSizes.getWidthPercentage(46),
+                        height: appSizes.getHeightPercentage(15),
+                        width: appSizes.getWidthPercentage(30),
                       ),
                       const Gap(23),
                       CustomInputTextField(
@@ -64,42 +65,41 @@ class SignInScreen extends StatelessWidget {
                               textAlign: TextAlign.end,
                               text: "Forget Password?",
                               fontSize: 14,
-                              textColor: AppColors.blackish,
+                              textColor: AppColors.white,
                             ),
                           )),
                       const Gap(21),
-                      CustomElevatedButton(
-                          onPress: () async{
-                            if (controller.formKey.currentState!.validate()) {
-                              Get.toNamed(AppRoutes.HOMESCREEN);
-                            } else {
-                              controller.toast
-                                  .showCustomToast("Please fill all fields");
-                            }
-                          },
-                          text: "SIGN IN"),
-                      Gap(appSizes.getHeightPercentage(6)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const CustomTextWidget(
-                            text: "Don't have any account?",
-                            fontSize: 12,
-                            textColor: AppColors.blackish,
-                          ),
-                          Gap(4),
-                          GestureDetector(
-                            onTap: () {
-                              Get.toNamed(AppRoutes.SIGNUPSCREEN);
+                      Obx(
+                        () =>  CustomElevatedButton(
+                          isLoading: controller.isLoading.value,
+                            onPress: () async{
+                              if (controller.formKey.currentState!.validate()) {
+                                await controller.userSignIn();
+                              } else {
+                                controller.toast
+                                    .showCustomToast("Please fill all fields");
+                              }
                             },
-                            child: const CustomTextWidget(
-                              text: "Create account",
-                              fontSize: 13,
-                              textColor: AppColors.orange,
-                            ),
-                          ),
-                        ],
+                            text: "SIGN IN"),
                       ),
+                      Gap(appSizes.getHeightPercentage(6)),
+                      SizedBox(
+                          width: appSizes.getWidthPercentage(70),
+                          child: const Divider(
+                            thickness: 0.5,
+                          )),
+                      const Gap(12),
+                      const CustomTextWidget(
+                        text: "Don't have any account?",
+                        fontSize: 15,
+                        textColor: AppColors.white,
+                      ),
+                      const Gap(12),
+                      CustomOutlineButton(
+                          onPress: () {
+                            Get.toNamed(AppRoutes.SIGNUPSCREEN);
+                          },
+                          text: "Create a new account"),
                     ],
                   ),
                 ),

@@ -24,11 +24,11 @@ class SignUpScreen extends StatelessWidget {
         return Material(
           child: Center(
             child: SafeArea(
-              child: SingleChildScrollView(
-                child: Form(
-                  key: controller.formKey,
-                  child: Padding(
-                    padding: appSizes.getCustomPadding(),
+              child: Padding(
+                padding: appSizes.getCustomPadding(),
+                child: SingleChildScrollView(
+                  child: Form(
+                    key: controller.formKey,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -40,7 +40,7 @@ class SignUpScreen extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   width: 0.5,
-                                  color: AppColors.blackish,
+                                  color: AppColors.white,
                                 ),
                                 image: controller.imagePicker.selectedImage
                                                 .value ==
@@ -62,10 +62,11 @@ class SignUpScreen extends StatelessWidget {
                                             ''
                                     ? ClipOval(
                                         child: Padding(
-                                          padding: const EdgeInsets.all(6.0),
+                                          padding: const EdgeInsets.all(22.0),
                                           child: Image.asset(
                                             AppImages.logo,
                                             fit: BoxFit.cover,
+                                            color: AppColors.whitish,
                                           ),
                                         ),
                                       )
@@ -157,7 +158,7 @@ class SignUpScreen extends StatelessWidget {
                           child: CustomTextWidget(
                             textAlign: TextAlign.start,
                             text: '  About',
-                            textColor: AppColors.black,
+                            textColor: AppColors.white,
                           ),
                         ),
                         const Gap(4),
@@ -179,7 +180,7 @@ class SignUpScreen extends StatelessWidget {
                           child: CustomTextWidget(
                             textAlign: TextAlign.start,
                             text: '  Gender',
-                            textColor: AppColors.black,
+                            textColor: AppColors.white,
                           ),
                         ),
                         Row(
@@ -187,7 +188,7 @@ class SignUpScreen extends StatelessWidget {
                           children: [
                             Obx(() => Radio(
                                   value: 'Male',
-                                  activeColor: AppColors.orange,
+                                  activeColor: AppColors.white,
                                   groupValue: controller.selectedGender.value,
                                   onChanged: (value) =>
                                       controller.selectedGender.value = value!,
@@ -195,7 +196,7 @@ class SignUpScreen extends StatelessWidget {
                             const CustomTextWidget(
                               textAlign: TextAlign.start,
                               text: 'Male',
-                              textColor: AppColors.blackish,
+                              textColor: AppColors.white,
                             ),
                             const Gap(16),
                             Obx(() => Radio(
@@ -208,51 +209,52 @@ class SignUpScreen extends StatelessWidget {
                             const CustomTextWidget(
                               textAlign: TextAlign.start,
                               text: 'Female',
-                              textColor: AppColors.blackish,
+                              textColor: AppColors.white,
                             ),
                           ],
                         ),
                         const Gap(21),
+                        Obx(
+                          () => CustomElevatedButton(
+                              isLoading: controller.isLoading.value,
+                              onPress: () {
+                                if (controller.formKey.currentState!
+                                    .validate()) {
+                                  if (controller
+                                          .createPasswordController.text ==
+                                      controller
+                                          .confirmPasswordController.text) {
+                                    controller.userSignUp();
+                                  } else {
+                                    controller.toast
+                                        .showCustomToast("Passwords mismatch");
+                                  }
+                                } else {
+                                  controller.toast.showCustomToast(
+                                      "Please fill all fields");
+                                }
+                              },
+                              text: "SIGN UP"),
+                        ),
+                        const Gap(23),
+                        SizedBox(
+                            width: appSizes.getWidthPercentage(70),
+                            child: const Divider(
+                              thickness: 0.5,
+                            )),
+                        const Gap(12),
+                        const CustomTextWidget(
+                          text: "Already have an account?",
+                          fontSize: 15,
+                          textColor: AppColors.white,
+                        ),
+                        const Gap(12),
                         CustomOutlineButton(
                             onPress: () {
-                              if (controller.formKey.currentState!
-                                  .validate()) {
-                                if (controller
-                                    .createPasswordController.text ==
-                                    controller
-                                        .confirmPasswordController.text) {
-                                } else {
-                                  controller.toast
-                                      .showCustomToast("Passwords mismatch");
-                                }
-                              } else {
-                                controller.toast.showCustomToast(
-                                    "Please fill all fields");
-                              }
+                              Get.toNamed(AppRoutes.SIGNINSCREEN);
                             },
-                            text: "SIGN UP"),
-                        Gap(appSizes.getHeightPercentage(3)),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const CustomTextWidget(
-                              text: "Already have an account?",
-                              fontSize: 12,
-                              textColor: AppColors.blackish,
-                            ),
-                            Gap(4),
-                            GestureDetector(
-                              onTap: () {
-                                Get.toNamed(AppRoutes.SIGNINSCREEN);
-                              },
-                              child: const CustomTextWidget(
-                                text: "Sign In",
-                                fontSize: 13,
-                                textColor: AppColors.orange,
-                              ),
-                            ),
-                          ],
-                        ),
+                            text: "Sing in Now"),
+                        const Gap(6),
                       ],
                     ),
                   ),
