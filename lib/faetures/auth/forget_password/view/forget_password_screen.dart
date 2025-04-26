@@ -27,7 +27,7 @@ class ForgetPasswordScreen extends StatelessWidget {
               children: [
                 const CustomTextWidget(
                   text: "Reset Password!",
-                  textColor: AppColors.white,
+                  textColor: AppColors.black,
                   textOverflow: TextOverflow.visible,
                   fontSize: 28,
                   fontWeight: FontWeight.w600,
@@ -38,7 +38,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                   child: const CustomTextWidget(
                     text:
                         "Please enter your account email to reset your password!",
-                    textColor: AppColors.whitish,
+                    textColor: AppColors.blackish,
                     textOverflow: TextOverflow.visible,
                   ),
                 ),

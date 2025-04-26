@@ -10,7 +10,7 @@ class StorageProvider {
   Future<void> uploadImage(File image) async {
     try {
       String fileName = DateTime.now().millisecondsSinceEpoch.toString();
-      Reference ref = storage.ref().child("tellMe_uploads/$fileName.jpg");
+      Reference ref = storage.ref().child("personal_ai_uploads/$fileName.jpg");
 
       UploadTask uploadTask = ref.putFile(image);
       TaskSnapshot snapshot = await uploadTask;

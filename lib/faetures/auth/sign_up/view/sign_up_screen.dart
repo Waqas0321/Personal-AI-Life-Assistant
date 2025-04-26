@@ -156,7 +156,7 @@ class SignUpScreen extends StatelessWidget {
                           child: CustomTextWidget(
                             textAlign: TextAlign.start,
                             text: '  About',
-                            textColor: AppColors.white,
+                            textColor: AppColors.blackish,
                           ),
                         ),
                         const Gap(4),
@@ -178,7 +178,7 @@ class SignUpScreen extends StatelessWidget {
                           child: CustomTextWidget(
                             textAlign: TextAlign.start,
                             text: '  Gender',
-                            textColor: AppColors.white,
+                            textColor: AppColors.black,
                           ),
                         ),
                         Row(
@@ -186,7 +186,7 @@ class SignUpScreen extends StatelessWidget {
                           children: [
                             Obx(() => Radio(
                                   value: 'Male',
-                                  activeColor: AppColors.white,
+                                  activeColor: AppColors.blackish,
                                   groupValue: controller.selectedGender.value,
                                   onChanged: (value) =>
                                       controller.selectedGender.value = value!,
@@ -194,12 +194,12 @@ class SignUpScreen extends StatelessWidget {
                             const CustomTextWidget(
                               textAlign: TextAlign.start,
                               text: 'Male',
-                              textColor: AppColors.white,
+                              textColor: AppColors.blackish,
                             ),
                             const Gap(16),
                             Obx(() => Radio(
                                   value: 'Female',
-                                  activeColor: AppColors.white,
+                                  activeColor: AppColors.blackish,
                                   groupValue: controller.selectedGender.value,
                                   onChanged: (value) =>
                                       controller.selectedGender.value = value!,
@@ -207,7 +207,7 @@ class SignUpScreen extends StatelessWidget {
                             const CustomTextWidget(
                               textAlign: TextAlign.start,
                               text: 'Female',
-                              textColor: AppColors.white,
+                              textColor: AppColors.blackish,
                             ),
                           ],
                         ),

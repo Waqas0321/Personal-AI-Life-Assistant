@@ -52,7 +52,7 @@ class SignUpController extends GetxController {
                   selectedGender: selectedGender.value);
               await fireStore
                   .storeDataWithUserID(
-                  collectionName: "tellMe_users",
+                  collectionName: "personal_ai_users",
                   data: user,
                   toJson: (user) => user.toJson())
                   .then(
