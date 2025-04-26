@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:personal_ai_life_assistant/core/Const/app_colors.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_text_widget.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
+import '../../../core/Const/app_images.dart';
 import '../../../core/utils/app_sizes.dart';
+import '../../../core/widgets/custom_appbar.dart';
 import '../controllers/schedule_controller.dart';
 
 class ScheduleScreen extends StatelessWidget {
@@ -16,9 +22,17 @@ class ScheduleScreen extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
-          appBar: AppBar(
-            title: const Text('Daily Planner'),
-            actions: [
+          backgroundColor: AppColors.white,
+          appBar: CustomAppBar(
+            title: controller.greeting.value ?? "Dashboard",
+            actionsWidgets: [
+              GestureDetector(
+                onTap: () {},
+                child: CircleAvatar(
+                  radius: 18,
+                  backgroundImage: AssetImage(AppImages.logo),
+                ),
+              ),
               PopupMenuButton<String>(
                 onSelected: (value) {
                   if (value == 'Day') {
@@ -29,49 +43,126 @@ class ScheduleScreen extends StatelessWidget {
                     controller.changeView(CalendarView.month);
                   }
                 },
-                itemBuilder: (context) => [
-                  const PopupMenuItem(value: 'Day', child: Text('Day View')),
-                  const PopupMenuItem(value: 'Week', child: Text('Week View')),
-                  const PopupMenuItem(value: 'Month', child: Text('Month View')),
-                ],
+                itemBuilder:
+                    (context) => [
+                      const PopupMenuItem(
+                        value: 'Day',
+                        child: CustomTextWidget(text: 'Day View'),
+                      ),
+                      const PopupMenuItem(
+                        value: 'Week',
+                        child: CustomTextWidget(text: 'Week View'),
+                      ),
+                      const PopupMenuItem(
+                        value: 'Month',
+                        child: CustomTextWidget(text: 'Month View'),
+                      ),
+                    ],
               ),
+              Gap(12),
             ],
           ),
-            body: Obx(
-                  () => SfCalendar(
-                view: controller.calendarView.value,
-                dataSource: TaskDataSource(controller.tasks),
-                allowDragAndDrop: true,
-                onDragEnd: (AppointmentDragEndDetails details) {
-                  final Appointment? oldAppointment = details.appointment as Appointment?;
-                  final DateTime? newStart = details.droppingTime;
-
-                  if (oldAppointment != null && newStart != null) {
-                    final Appointment newAppointment = Appointment(
-                      startTime: newStart,
-                      endTime: newStart.add(
-                        oldAppointment.endTime.difference(oldAppointment.startTime),
-                      ),
-                      subject: oldAppointment.subject,
-                      color: oldAppointment.color,
-                      notes: oldAppointment.notes,
-                      location: oldAppointment.location,
-                      isAllDay: oldAppointment.isAllDay,
-                      resourceIds: oldAppointment.resourceIds,
-                      recurrenceRule: oldAppointment.recurrenceRule,
-                    );
-                    controller.updateTask(oldAppointment, newAppointment);
-                  }
-                },
+          body: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [AppColors.primary, AppColors.blackish],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
-            )
+            ),
+            child: Padding(
+              padding: appSizes.getCustomPadding(
+                bottom: 1,
+                left: 1,
+                right: 0,
+                top: 0,
+              ),
+              child: Card(
+                elevation: 8,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                color: Colors.white,
+                child: Obx(
+                  () => SfCalendar(
+                    backgroundColor: AppColors.white,
+                    view: controller.calendarView.value,
+                    dataSource: TaskDataSource(
+                      controller.taskList
+                          .map(
+                            (task) => Appointment(
+                              startTime: task.startTime,
+                              endTime: task.endTime,
+                              subject: task.title,
+                              color: controller.getColorForCategory(
+                                task.category,
+                              ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                    allowDragAndDrop: true,
+                    onDragEnd: (AppointmentDragEndDetails details) {
+                      final Appointment? oldAppointment =
+                          details.appointment as Appointment?;
+                      final DateTime? newStart = details.droppingTime;
+                      if (oldAppointment != null && newStart != null) {
+                        final Appointment newAppointment = Appointment(
+                          startTime: newStart,
+                          endTime: newStart.add(
+                            oldAppointment.endTime.difference(
+                              oldAppointment.startTime,
+                            ),
+                          ),
+                          subject: oldAppointment.subject,
+                          color: oldAppointment.color,
+                        );
+                        // update task here if needed
+                      }
+                    },
+                    onTap: (CalendarTapDetails details) {
+                      if (details.appointments != null &&
+                          details.appointments!.isNotEmpty) {
+                        final Appointment tappedAppointment =
+                            details.appointments!.first;
 
+                        /// Show a simple dialog or tooltip
+                        final DateFormat formatter = DateFormat('MMM dd, yyyy – hh:mm a');
+                        Get.defaultDialog(
+                          backgroundColor: AppColors.white,
+                          titlePadding: EdgeInsets.zero,
+                          title: '',
+                          content: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              CustomTextWidget(
+                                text: tappedAppointment.subject,
+                                fontSize: 22,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              Gap(12),
+                              CustomTextWidget(
+                                text: "🕑 Start: ${formatter.format(tappedAppointment.startTime)}",
+                              ),
+                              const SizedBox(height: 8),
+                              CustomTextWidget(text: "🕑 End: ${formatter.format(tappedAppointment.endTime)}"),
+                            ],
+                          ),
+                        );
+                      }
+                    },
+                  ),
+                ),
+              ),
+            ),
+          ),
         );
       },
     );
   }
 }
-// Custom DataSource for the Calendar
+
+/// Custom DataSource for the Calendar
 class TaskDataSource extends CalendarDataSource {
   TaskDataSource(List<Appointment> source) {
     appointments = source;

@@ -15,18 +15,6 @@ class BottomNavScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: "Dashboard",
-        actionsWidgets: [
-          GestureDetector(
-              onTap: () {
-              },
-              child: CircleAvatar(
-                  radius: 18,
-                  backgroundImage: AssetImage(AppImages.logo))),
-          Gap(12),
-        ],
-      ),
       body: Obx(() => navController.screens[navController.currentIndex.value]),
       bottomNavigationBar: Obx(
         () => BottomNavigationBar(
