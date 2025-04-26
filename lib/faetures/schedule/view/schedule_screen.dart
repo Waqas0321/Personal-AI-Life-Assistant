@@ -179,7 +179,6 @@ class ScheduleScreen extends StatelessWidget {
                           details.appointments!.isNotEmpty) {
                         final Appointment tappedAppointment =
                             details.appointments!.first;
-
                         /// Show a simple dialog or tooltip
                         final DateFormat formatter = DateFormat(
                           'MMM dd, yyyy – hh:mm a',

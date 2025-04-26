@@ -101,7 +101,7 @@ class ScheduleController extends GetxController {
       case 'Tired':
         return [];
       case 'Happy':
-        return tasks.where((task) => task.category != 'Health').toList();
+        return tasks.where((task) => task.category != '').toList();
       default:
         return tasks;
     }
