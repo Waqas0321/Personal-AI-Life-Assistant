@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/Const/app_colors.dart';
 import '../../../core/Const/app_images.dart';
-import '../../../core/widgets/custom_appbar.dart';
 import '../controller/bottomNav_controller.dart';
 
 class BottomNavScreen extends StatelessWidget {
@@ -41,7 +39,7 @@ class BottomNavScreen extends StatelessWidget {
                 () => Image.asset(
                   AppImages.home,
                   color:
-                      navController.currentIndex.value == 1
+                      navController.currentIndex.value == 0
                           ? AppColors.primary
                           : AppColors.blackish,
                   height: 24,
@@ -49,6 +47,20 @@ class BottomNavScreen extends StatelessWidget {
                 ),
               ),
               label: 'Schedule',
+            ),
+            BottomNavigationBarItem(
+              icon: Obx(
+                () => Image.asset(
+                  AppImages.home,
+                  color:
+                      navController.currentIndex.value == 1
+                          ? AppColors.primary
+                          : AppColors.blackish,
+                  height: 24,
+                  width: 24,
+                ),
+              ),
+              label: 'Task',
             ),
             BottomNavigationBarItem(
               icon: Obx(

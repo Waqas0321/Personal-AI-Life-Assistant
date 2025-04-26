@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_ai_life_assistant/core/Const/app_colors.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_text_widget.dart';
