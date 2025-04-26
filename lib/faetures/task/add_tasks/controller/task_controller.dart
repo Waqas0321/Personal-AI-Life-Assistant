@@ -4,7 +4,6 @@ import 'package:personal_ai_life_assistant/core/widgets/custom_toast_show.dart';
 import 'package:personal_ai_life_assistant/data/shared_preference/shared_preference_services.dart';
 import 'package:personal_ai_life_assistant/faetures/task/tasks_list/controller/tasks_list_controller.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
-
 import '../../../../data/models/task_model.dart';
 import '../../../../data/providers/local_database/database_helper.dart';
 import '../../../../data/providers/local_database/databse_constants.dart';
@@ -73,6 +72,29 @@ class TaskController extends GetxController {
       );
       await dbHelper.insert(DatabaseConstants.tasksTable, task);
       toast.showCustomToast('Task added successfully');
+      tasksListController.onInit();
+      Get.back();
+      clearFields();
+    } catch (e) {
+      toast.showCustomToast(e.toString());
+    } finally {
+      isLoading.value = false;
+    }
+  }
+  Future<void> updateTask(int taskId) async {
+    try {
+      isLoading.value = true;
+      String? userID = await PreferenceHelper.getString("userID");
+      final task = TaskModel(
+        taskId: taskId,
+        taskTitle: titleController.text.trim(),
+        startTime: startTime.value,
+        userId: userID,
+        endTime: endTime.value,
+        category: selectedCategory.value,
+      );
+      await dbHelper.update(DatabaseConstants.tasksTable, task,DatabaseConstants.columnTaskId,[taskId]);
+      toast.showCustomToast('Task Updated successfully');
       tasksListController.onInit();
       Get.back();
       clearFields();

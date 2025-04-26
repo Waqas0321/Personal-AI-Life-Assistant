@@ -6,6 +6,7 @@ import 'package:personal_ai_life_assistant/core/utils/app_sizes.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_appbar.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_elevated_button.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_text_widget.dart';
+import 'package:personal_ai_life_assistant/data/models/task_model.dart';
 import '../../../../core/Const/app_colors.dart';
 import '../../../../core/widgets/custom_input_textfield.dart';
 import '../controller/task_controller.dart';
@@ -17,6 +18,19 @@ class TaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TaskModel? taskModel = Get.arguments['taskModel'];
+
+    if (taskModel != null) {
+      controller.titleController.text = taskModel.taskTitle;
+      controller.startTime.value = taskModel.startTime;
+      controller.endTime.value = taskModel.endTime;
+      controller.selectedCategory.value = taskModel.category;
+    } else {
+      controller.titleController.clear();
+      controller.startTime.value = DateTime.now();
+      controller.endTime.value = DateTime.now();
+      controller.selectedCategory.value = 'Academics';
+    }
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: CustomAppBar(title: "Add Task", goBack: true),
@@ -159,8 +173,14 @@ class TaskScreen extends StatelessWidget {
             Obx(
               () => CustomElevatedButton(
                 isLoading: controller.isLoading.value,
-                onPress: controller.addTask,
-                text: "Add Task",
+                onPress: () {
+                  if(taskModel != null){
+                    controller.updateTask(taskModel.taskId!);
+                  }else{
+                    controller.addTask();
+                  }
+                },
+                text: taskModel != null?"Update Task":"Add Task",
               ),
             ),
           ],
