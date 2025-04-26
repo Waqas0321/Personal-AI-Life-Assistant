@@ -11,7 +11,7 @@ import '../controller/task_controller.dart';
 class TaskScreen extends StatelessWidget {
   TaskScreen({super.key});
 
-  final TaskController controller = Get.put(TaskController());
+  final TaskController controller = Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
