@@ -1,0 +1,126 @@
+{
+  "project_info": {
+    "project_number": "452022753540",
+    "project_id": "civitante",
+    "storage_bucket": "civitante.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452022753540:android:ee82b951b1392876d8d851",
+        "android_client_info": {
+          "package_name": "com.app.civitante"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452022753540-4fplhmji9fhpv79rf79s1tjpihq1hrp4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.app.civitante",
+            "certificate_hash": "1f7eb9ec5bbc950dd3dec393f86e6ff5d1cd4071"
+          }
+        },
+        {
+          "client_id": "452022753540-d9u4jogldp9ij23cj296s4qhur9aietp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa__zEouUu4yUGV7U2Tv2MmCjKvJJD2Fg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452022753540-d9u4jogldp9ij23cj296s4qhur9aietp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "452022753540-8bsutgtmnloae1d1d0knfsiisohfrb7t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.civitante"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452022753540:android:063a5928e89b84bfd8d851",
+        "android_client_info": {
+          "package_name": "com.example.omega"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452022753540-d9u4jogldp9ij23cj296s4qhur9aietp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa__zEouUu4yUGV7U2Tv2MmCjKvJJD2Fg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452022753540-d9u4jogldp9ij23cj296s4qhur9aietp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "452022753540-8bsutgtmnloae1d1d0knfsiisohfrb7t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.civitante"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:452022753540:android:668671f994bf9f7dd8d851",
+        "android_client_info": {
+          "package_name": "com.personalai.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "452022753540-d9u4jogldp9ij23cj296s4qhur9aietp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDa__zEouUu4yUGV7U2Tv2MmCjKvJJD2Fg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "452022753540-d9u4jogldp9ij23cj296s4qhur9aietp.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "452022753540-8bsutgtmnloae1d1d0knfsiisohfrb7t.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.civitante"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
