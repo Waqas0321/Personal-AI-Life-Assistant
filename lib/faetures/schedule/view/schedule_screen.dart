@@ -64,30 +64,101 @@ class ScheduleScreen extends StatelessWidget {
           ),
           body: Column(
             children: [
+              Gap(6),
+              Container(
+                padding: appSizes.getCustomPadding(),
+                decoration: BoxDecoration(
+                  color: AppColors.primary,
+                  borderRadius: BorderRadius.circular(18),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.blackish,
+                      spreadRadius: -1,
+                      blurRadius: 8,
+                    ),
+                  ],
+                ),
+                width: appSizes.getWidthPercentage(90),
+                child: GridView.builder(
+                  shrinkWrap: true,
+                  itemCount: controller.moods.length,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4,
+                    crossAxisSpacing: 8,
+                    mainAxisSpacing: 8,
+                    childAspectRatio: 0.9,
+                  ),
+                  itemBuilder: (context, index) {
+                    final mood = controller.moods[index];
+
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      elevation: 2,
+                      child: Obx(
+                        () => GestureDetector(
+                          onTap: () {
+                            controller.selectMood(mood['label']);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color:
+                                  controller.selectedMood.value != mood['label']
+                                      ? Colors.grey[200]
+                                      : AppColors.primary.withOpacity(0.2),
+                              borderRadius: BorderRadius.circular(12),
+                              border: Border.all(
+                                color:
+                                    controller.selectedMood.value ==
+                                            mood['label']
+                                        ? AppColors.primary
+                                        : Colors.transparent,
+                                width: 2,
+                              ),
+                            ),
+                            child: Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  CustomTextWidget(
+                                    text: mood['emoji'],
+                                    fontSize: 40,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
               Gap(8),
               Expanded(
                 child: Obx(
-                      () => SfCalendar(
+                  () => SfCalendar(
                     backgroundColor: AppColors.white,
                     view: controller.calendarView.value,
                     dataSource: TaskDataSource(
                       controller.taskList
                           .map(
                             (task) => Appointment(
-                          startTime: task.startTime,
-                          endTime: task.endTime,
-                          subject: task.taskTitle,
-                          color: controller.getColorForCategory(
-                            task.category,
-                          ),
-                        ),
-                      )
+                              startTime: task.startTime,
+                              endTime: task.endTime,
+                              subject: task.taskTitle,
+                              color: controller.getColorForCategory(
+                                task.category,
+                              ),
+                            ),
+                          )
                           .toList(),
                     ),
                     allowDragAndDrop: true,
                     onDragEnd: (AppointmentDragEndDetails details) {
                       final Appointment? oldAppointment =
-                      details.appointment as Appointment?;
+                          details.appointment as Appointment?;
                       final DateTime? newStart = details.droppingTime;
                       if (oldAppointment != null && newStart != null) {
                         final Appointment newAppointment = Appointment(
@@ -110,7 +181,9 @@ class ScheduleScreen extends StatelessWidget {
                             details.appointments!.first;
 
                         /// Show a simple dialog or tooltip
-                        final DateFormat formatter = DateFormat('MMM dd, yyyy – hh:mm a');
+                        final DateFormat formatter = DateFormat(
+                          'MMM dd, yyyy – hh:mm a',
+                        );
                         Get.defaultDialog(
                           backgroundColor: AppColors.white,
                           titlePadding: EdgeInsets.zero,
@@ -125,10 +198,14 @@ class ScheduleScreen extends StatelessWidget {
                               ),
                               Gap(12),
                               CustomTextWidget(
-                                text: "🕑 Start: ${formatter.format(tappedAppointment.startTime)}",
+                                text:
+                                    "🕑 Start: ${formatter.format(tappedAppointment.startTime)}",
                               ),
                               const SizedBox(height: 8),
-                              CustomTextWidget(text: "🕑 End: ${formatter.format(tappedAppointment.endTime)}"),
+                              CustomTextWidget(
+                                text:
+                                    "🕑 End: ${formatter.format(tappedAppointment.endTime)}",
+                              ),
                             ],
                           ),
                         );
