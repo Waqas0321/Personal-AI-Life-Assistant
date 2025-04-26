@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
@@ -7,22 +6,24 @@ import '../../../data/models/task_model.dart';
 import '../../../data/providers/local_database/database_helper.dart';
 import '../../../data/providers/local_database/databse_constants.dart';
 import '../../../data/shared_preference/shared_preference_services.dart';
+
 class ScheduleController extends GetxController {
   var selectedMood = ''.obs;
-  void selectMood(String mood) {
+
+  void selectMood(String mood) async {
     selectedMood.value = mood;
+    await getTasksByUserId();
   }
 
   final List<Map<String, dynamic>> moods = [
     {'emoji': '😊', 'label': 'Happy'},
-    {'emoji': '😐', 'label': 'Neutral'},
     {'emoji': '😢', 'label': 'Sad'},
     {'emoji': '😡', 'label': 'Angry'},
     {'emoji': '😴', 'label': 'Tired'},
-    {'emoji': '🤩', 'label': 'Excited'},
   ];
+
   /// Task list
-  var taskList = <TaskModel>[].obs;
+  RxList<TaskModel> taskList = <TaskModel>[].obs;
 
   /// Calendar view type
   var calendarView = CalendarView.week.obs;
@@ -31,12 +32,13 @@ class ScheduleController extends GetxController {
   var greeting = ''.obs;
 
   @override
-  void onInit() async{
+  void onInit() async {
     super.onInit();
     getCurrentTag();
     await getTasksByUserId();
     updateGreeting();
   }
+
   /// Change calendar view
   void changeView(CalendarView view) {
     calendarView.value = view;
@@ -44,12 +46,16 @@ class ScheduleController extends GetxController {
 
   /// Get list of Appointments from TaskModel
   List<Appointment> get calendarAppointments {
-    return taskList.map((task) => Appointment(
-      startTime: task.startTime,
-      endTime: task.endTime,
-      subject: task.taskTitle,
-      color: getColorForCategory(task.category),
-    )).toList();
+    return taskList
+        .map(
+          (task) => Appointment(
+            startTime: task.startTime,
+            endTime: task.endTime,
+            subject: task.taskTitle,
+            color: getColorForCategory(task.category),
+          ),
+        )
+        .toList();
   }
 
   /// Dummy task entries
@@ -60,19 +66,44 @@ class ScheduleController extends GetxController {
         taskList.clear();
         return;
       }
-      print(userId);
-      List<Map<String, dynamic>> categoryMapList = await DatabaseHelper().getListById(
-        DatabaseConstants.tasksTable,
-        DatabaseConstants.columnUserId,
-        userId,
-      );
 
-      taskList.value = categoryMapList
-          .map((map) => TaskModel.fromMap(map))
-          .toList();
+      List<Map<String, dynamic>> categoryMapList = await DatabaseHelper()
+          .getListById(
+            DatabaseConstants.tasksTable,
+            DatabaseConstants.columnUserId,
+            userId,
+          );
+
+      List<TaskModel> tasks =
+          categoryMapList.map((map) => TaskModel.fromMap(map)).toList();
+      String selectedMood = this.selectedMood.value.trim();
+
+      if (selectedMood.isNotEmpty) {
+        tasks = filterTasksByMood(tasks, selectedMood);
+      }
+
+      taskList.value = tasks;
     } catch (e) {
       log('Error fetching tasks by user ID: $e');
       taskList.clear();
+    }
+  }
+
+  /// Separate mood filtering logic into a helper function
+  List<TaskModel> filterTasksByMood(List<TaskModel> tasks, String mood) {
+    switch (mood) {
+      case 'Angry':
+        return tasks
+            .where((task) => task.category != 'Academic Schedule')
+            .toList();
+      case 'Sad':
+        return tasks.where((task) => task.category != 'Social').toList();
+      case 'Tired':
+        return [];
+      case 'Happy':
+        return tasks.where((task) => task.category != 'Health').toList();
+      default:
+        return tasks;
     }
   }
 
