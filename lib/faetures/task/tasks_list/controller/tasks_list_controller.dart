@@ -44,7 +44,7 @@ class TasksListController extends GetxController {
     try {
       int result = await DatabaseHelper().delete(
         DatabaseConstants.tasksTable,
-        "${DatabaseConstants.columnTaskId} = ?",
+        DatabaseConstants.columnTaskId,
         [taskID],
       );
       if (result > 0) {

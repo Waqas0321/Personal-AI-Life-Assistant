@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
+import 'package:personal_ai_life_assistant/core/app_routes/routes.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_text_widget.dart';
-import 'package:personal_ai_life_assistant/faetures/task/add_tasks/view/task_screen.dart';
 import '../../../core/Const/app_colors.dart';
 import '../../../core/Const/app_images.dart';
 import '../controller/bottomNav_controller.dart';
@@ -15,16 +15,18 @@ class BottomNavScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Obx(() => navController.screens[navController.currentIndex.value]),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
         shape: const CircleBorder(),
         onPressed: () {
-          Get.to(TaskScreen());
+          Get.toNamed(AppRoutes.ADDTASKSCREEN, arguments: {'taskModel': null});
         },
         child: const Icon(Icons.add, color: Colors.white, size: 30),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // Keeps it fixed at the bottom
       bottomNavigationBar: BottomAppBar(
         color: AppColors.primary,
         shape: const CircularNotchedRectangle(),

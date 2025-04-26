@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:personal_ai_life_assistant/core/app_routes/routes.dart';
 import 'package:personal_ai_life_assistant/core/utils/app_sizes.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_appbar.dart';
 import 'package:personal_ai_life_assistant/data/models/task_model.dart';
@@ -82,6 +83,12 @@ class TaskListScreen extends StatelessWidget {
                                     fontSize: 14,
                                     fontWeight: FontWeight.w500,
                                   ),
+                                  CustomTextWidget(
+                                    text: task.category,
+                                    fontSize: 12,
+                                    textColor: AppColors.blackish,
+                                    fontWeight: FontWeight.w500,
+                                  ),
                                   Row(
                                     children: [
                                       CustomTextWidget(
@@ -113,7 +120,11 @@ class TaskListScreen extends StatelessWidget {
                               ),
                               Spacer(),
                               GestureDetector(
-                                onTap: () {},
+                                onTap: () {
+                                  Get.toNamed(AppRoutes.ADDTASKSCREEN,arguments: {
+                                    'taskModel':task
+                                  });
+                                },
                                 child: Image.asset(
                                   AppImages.edit,
                                   height: 26,
