@@ -40,8 +40,8 @@ class SignUpController extends GetxController {
               createPasswordController.text.trim())
               .then(
                 (value) async{
-                  print(storage.imageUrl);
               String? userId = await PreferenceHelper.getString("userID");
+              await PreferenceHelper.setString("userImage",storage.imageUrl.value);
               UserModel user = UserModel(
                   firstName: firstNameController.text.trim(),
                   lastName: lastNameController.text.trim(),

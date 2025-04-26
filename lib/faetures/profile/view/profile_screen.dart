@@ -24,6 +24,7 @@ class ProfileScreen extends StatelessWidget {
       builder: (context, constraints) {
         return Scaffold(
           appBar: const CustomAppBar(
+            goBack: true,
             title: "Profile",
           ),
           body: StreamBuilder(

@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../../../data/models/task_model.dart';
+import '../../../data/models/user_model.dart';
+import '../../../data/providers/firestore_provider.dart';
 import '../../../data/providers/local_database/database_helper.dart';
 import '../../../data/providers/local_database/databse_constants.dart';
+import '../../../data/providers/user_provider.dart';
 import '../../../data/shared_preference/shared_preference_services.dart';
 
 class ScheduleController extends GetxController {
@@ -33,6 +36,7 @@ class ScheduleController extends GetxController {
 
   /// Greeting
   var greeting = ''.obs;
+  var userImage = ''.obs;
 
   @override
   void onInit() async {
@@ -40,6 +44,11 @@ class ScheduleController extends GetxController {
     getCurrentTag();
     await getTasksByUserId();
     updateGreeting();
+  }
+  FireStoreProvider fireStore = FireStoreProvider();
+  UserProvider auth = UserProvider();
+  Stream<UserModel?> getUserStream() {
+    return fireStore.getDataByUserID(collectionName: "personal_ai_users", fromJson: UserModel.fromJson);
   }
 
   /// Change calendar view

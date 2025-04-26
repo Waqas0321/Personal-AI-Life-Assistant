@@ -30,9 +30,30 @@ class ScheduleScreen extends StatelessWidget {
               GestureDetector(onTap: () {
                 Get.to(() => ProfileScreen());
               },
-                child: CircleAvatar(
-                  radius: 18,
-                  backgroundImage: AssetImage(AppImages.logo),
+                child: StreamBuilder(
+                  stream: controller.getUserStream(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircleAvatar(
+                        radius: 18,
+                        backgroundImage: AssetImage(AppImages.logo),
+                      );
+                    } else if (snapshot.hasData && snapshot.data != null) {
+                      final user = snapshot.data;
+
+                      return CircleAvatar(
+                        radius: 18,
+                        backgroundImage: user!.imagePath != null
+                            ? NetworkImage(user.imagePath!)
+                            :AssetImage(AppImages.logo) as ImageProvider,
+                      );
+                    } else {
+                      return CircleAvatar(
+                        radius: 18,
+                        backgroundImage: AssetImage(AppImages.logo),
+                      );
+                    }
+                  },
                 ),
               ),
               PopupMenuButton<String>(

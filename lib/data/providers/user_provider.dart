@@ -42,6 +42,7 @@ class UserProvider {
     try {
       await auth.signOut().then((value) async{
         return await PreferenceHelper.removeData('userID').then((value)async {
+          PreferenceHelper.removeData("userImage");
           Get.offAllNamed(AppRoutes.SIGNINSCREEN);
           toast.showCustomToast("Sign out Successfully");
         },);

@@ -1,6 +1,8 @@
+import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_toast_show.dart';
 import 'package:personal_ai_life_assistant/data/shared_preference/shared_preference_services.dart';
 import 'package:personal_ai_life_assistant/faetures/task/tasks_list/controller/tasks_list_controller.dart';
@@ -18,8 +20,12 @@ class TaskController extends GetxController {
   final categoryList = ['Academics', 'Social', 'Personal', 'Health'];
 
   var selectedCategory = 'Academics'.obs;
-  var startTime = DateTime.now().obs;
-  var endTime = DateTime.now().obs;
+  var startTime = DateTime
+      .now()
+      .obs;
+  var endTime = DateTime
+      .now()
+      .obs;
   var isLoading = false.obs;
 
   void setStartTime(DateTime pickedDate) {
@@ -58,7 +64,9 @@ class TaskController extends GetxController {
   }
 
   Future<void> addTask() async {
-    if (titleController.text.trim().isEmpty) {
+    if (titleController.text
+        .trim()
+        .isEmpty) {
       toast.showCustomToast("Title is required!");
       return;
     }
@@ -73,6 +81,12 @@ class TaskController extends GetxController {
         category: selectedCategory.value,
       );
       await dbHelper.insert(DatabaseConstants.tasksTable, task);
+      showNotification(titleController.text.trim(),
+          "Your task ${titleController.text.trim()} is updated\n${DateFormat(
+            'yyyy-MM-dd HH:mm',
+          ).format(startTime.value)} - ${DateFormat(
+            'yyyy-MM-dd HH:mm',
+          ).format(endTime.value)}");
       toast.showCustomToast('Task added successfully');
       tasksListController.onInit();
       Get.back();
@@ -83,6 +97,7 @@ class TaskController extends GetxController {
       isLoading.value = false;
     }
   }
+
   Future<void> updateTask(int taskId) async {
     try {
       isLoading.value = true;
@@ -95,8 +110,16 @@ class TaskController extends GetxController {
         endTime: endTime.value,
         category: selectedCategory.value,
       );
-      await dbHelper.update(DatabaseConstants.tasksTable, task,DatabaseConstants.columnTaskId,[taskId]);
+      await dbHelper.update(
+          DatabaseConstants.tasksTable, task, DatabaseConstants.columnTaskId,
+          [taskId]);
       toast.showCustomToast('Task Updated successfully');
+      showNotification(titleController.text.trim(),
+          "Your task ${titleController.text.trim()} is updated\n${DateFormat(
+            'yyyy-MM-dd HH:mm',
+          ).format(startTime.value)} - ${DateFormat(
+            'yyyy-MM-dd HH:mm',
+          ).format(endTime.value)}");
       tasksListController.onInit();
       Get.back();
       clearFields();
@@ -137,6 +160,18 @@ class TaskController extends GetxController {
         }
       }
     }
+  }
+
+  void showNotification(String title, String body) {
+    AwesomeNotifications().createNotification(
+      content: NotificationContent(
+        id: 10,
+        autoDismissible: true,
+        channelKey: 'basic_channel',
+        title: title,
+        body: body,
+      ),
+    );
   }
 
   void clearFields() {

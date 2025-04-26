@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:personal_ai_life_assistant/core/Const/app_images.dart';
 import 'package:personal_ai_life_assistant/core/utils/app_sizes.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_appbar.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_elevated_button.dart';
@@ -88,18 +87,6 @@ class TaskScreen extends StatelessWidget {
                   ),
                 ),
               ],
-            ),
-            Gap(8),
-            GestureDetector(
-              onTap: () {},
-              child: Container(
-                height: 200,
-                width: AppSizes().getWidthPercentage(100),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: AppColors.blackish, width: 1),
-                ),
-              ),
             ),
             Gap(12),
             CustomTextWidget(text: 'Start Time'),
@@ -190,6 +177,7 @@ class TaskScreen extends StatelessWidget {
                     controller.updateTask(taskModel.taskId!);
                   } else {
                     controller.addTask();
+
                   }
                 },
                 text: taskModel != null ? "Update Task" : "Add Task",

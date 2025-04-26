@@ -10,7 +10,7 @@ plugins {
 
 android {
     namespace = "com.personalai.app"
-    compileSdk = flutter.compileSdkVersion
+    compileSdk = 34
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
