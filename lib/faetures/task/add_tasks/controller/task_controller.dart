@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_toast_show.dart';
 import 'package:personal_ai_life_assistant/data/shared_preference/shared_preference_services.dart';
 import 'package:personal_ai_life_assistant/faetures/task/tasks_list/controller/tasks_list_controller.dart';
@@ -10,6 +11,7 @@ import '../../../../data/providers/local_database/databse_constants.dart';
 
 class TaskController extends GetxController {
   ToastClass toast = ToastClass();
+  ImagePicker imagePicker = ImagePicker();
   TasksListController tasksListController = Get.put(TasksListController());
   DatabaseHelper dbHelper = DatabaseHelper();
   final titleController = TextEditingController();
