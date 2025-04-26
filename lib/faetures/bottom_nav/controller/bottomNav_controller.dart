@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
-import 'package:personal_ai_life_assistant/faetures/task/view/tasks_screen.dart';
+import 'package:personal_ai_life_assistant/faetures/task/view/task_screen.dart';
+import '../../mood/view/mood_screen.dart';
 import '../../schedule/view/schedule_screen.dart';
 
 class BottomNavController extends GetxController {
@@ -7,7 +8,7 @@ class BottomNavController extends GetxController {
   final screens = [
     ScheduleScreen(),
     TaskScreen(),
-    ScheduleScreen(),
+    MoodScreen (),
     ScheduleScreen(),
     ScheduleScreen(),
   ];
