@@ -27,47 +27,7 @@ class MoodScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Wrap(
-                  alignment: WrapAlignment.center,
-                  spacing: constraints.maxWidth * 0.05,
-                  runSpacing: constraints.maxHeight * 0.02,
-                  children: controller.moods.map((mood) {
-                    return Obx(
-                          () => GestureDetector(
-                        onTap: () {
-                          controller.selectMood(mood['label']);
-                        },
-                        child: Container(
-                          width: constraints.maxWidth * 0.18,
-                          height: constraints.maxWidth * 0.18,
-                          decoration: BoxDecoration(
-                            color: controller.selectedMood.value == mood['label']
-                                ? AppColors.primary
-                                : Colors.grey[300],
-                            shape: BoxShape.circle,
-                            boxShadow: controller.selectedMood.value == mood['label']
-                                ? [
-                              BoxShadow(
-                                color: AppColors.primary.withOpacity(0.4),
-                                blurRadius: 8,
-                                spreadRadius: 2,
-                              ),
-                            ]
-                                : [],
-                          ),
-                          child: Center(
-                            child: Text(
-                              mood['emoji'],
-                              style: TextStyle(
-                                fontSize: constraints.maxWidth * 0.08,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
+
                 SizedBox(height: constraints.maxHeight * 0.05),
                 SizedBox(
                   width: double.infinity,

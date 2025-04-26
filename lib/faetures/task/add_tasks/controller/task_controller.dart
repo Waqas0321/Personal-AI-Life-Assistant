@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_toast_show.dart';
-import 'package:personal_ai_life_assistant/data/providers/firestore_provider.dart';
-import '../../../data/models/task_model.dart';
+import 'package:personal_ai_life_assistant/data/shared_preference/shared_preference_services.dart';
+import 'package:personal_ai_life_assistant/faetures/task/tasks_list/controller/tasks_list_controller.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
+
+import '../../../../data/models/task_model.dart';
+import '../../../../data/providers/local_database/database_helper.dart';
+import '../../../../data/providers/local_database/databse_constants.dart';
 
 class TaskController extends GetxController {
   ToastClass toast = ToastClass();
-  FireStoreProvider fireStore = FireStoreProvider();
+  TasksListController tasksListController = Get.put(TasksListController());
+  DatabaseHelper dbHelper = DatabaseHelper();
   final titleController = TextEditingController();
   final categoryList = ['Academics', 'Social', 'Personal', 'Health'];
 
@@ -56,22 +61,20 @@ class TaskController extends GetxController {
       toast.showCustomToast("Title is required!");
       return;
     }
-
-    isLoading.value = true;
-
     try {
+      isLoading.value = true;
+      String? userID = await PreferenceHelper.getString("userID");
       final task = TaskModel(
-        title: titleController.text.trim(),
+        taskTitle: titleController.text.trim(),
         startTime: startTime.value,
+        userId: userID,
         endTime: endTime.value,
         category: selectedCategory.value,
       );
-      await fireStore.storeDataWithUUID(
-        collectionName: "tasks",
-        data: task,
-        toJson: (p0) => task.toJson(),
-      );
+      await dbHelper.insert(DatabaseConstants.tasksTable, task);
       toast.showCustomToast('Task added successfully');
+      tasksListController.onInit();
+      Get.back();
       clearFields();
     } catch (e) {
       toast.showCustomToast(e.toString());

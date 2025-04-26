@@ -1,8 +1,26 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../../../data/models/task_model.dart';
+import '../../../data/providers/local_database/database_helper.dart';
+import '../../../data/providers/local_database/databse_constants.dart';
+import '../../../data/shared_preference/shared_preference_services.dart';
 class ScheduleController extends GetxController {
+  var selectedMood = ''.obs;
+  void selectMood(String mood) {
+    selectedMood.value = mood;
+  }
+
+  final List<Map<String, dynamic>> moods = [
+    {'emoji': '😊', 'label': 'Happy'},
+    {'emoji': '😐', 'label': 'Neutral'},
+    {'emoji': '😢', 'label': 'Sad'},
+    {'emoji': '😡', 'label': 'Angry'},
+    {'emoji': '😴', 'label': 'Tired'},
+    {'emoji': '🤩', 'label': 'Excited'},
+  ];
   /// Task list
   var taskList = <TaskModel>[].obs;
 
@@ -13,12 +31,12 @@ class ScheduleController extends GetxController {
   var greeting = ''.obs;
 
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
-    addDummyTasks();
+    getCurrentTag();
+    await getTasksByUserId();
     updateGreeting();
   }
-
   /// Change calendar view
   void changeView(CalendarView view) {
     calendarView.value = view;
@@ -29,36 +47,33 @@ class ScheduleController extends GetxController {
     return taskList.map((task) => Appointment(
       startTime: task.startTime,
       endTime: task.endTime,
-      subject: task.title,
+      subject: task.taskTitle,
       color: getColorForCategory(task.category),
     )).toList();
   }
 
   /// Dummy task entries
-  void addDummyTasks() {
-    taskList.addAll([
-      TaskModel(
-        id: '1',
-        title: 'Study Flutter',
-        startTime: DateTime.now().add(const Duration(hours: 1)),
-        endTime: DateTime.now().add(const Duration(hours: 2)),
-        category: 'academics',
-      ),
-      TaskModel(
-        id: '2',
-        title: 'Gym Workout',
-        startTime: DateTime.now().add(const Duration(hours: 3)),
-        endTime: DateTime.now().add(const Duration(hours: 4)),
-        category: 'health',
-      ),
-      TaskModel(
-        id: '3',
-        title: 'Dinner with Friends',
-        startTime: DateTime.now().add(const Duration(hours: 5)),
-        endTime: DateTime.now().add(const Duration(hours: 6)),
-        category: 'social',
-      ),
-    ]);
+  Future<void> getTasksByUserId() async {
+    try {
+      String? userId = await PreferenceHelper.getString("userID");
+      if (userId == null) {
+        taskList.clear();
+        return;
+      }
+      print(userId);
+      List<Map<String, dynamic>> categoryMapList = await DatabaseHelper().getListById(
+        DatabaseConstants.tasksTable,
+        DatabaseConstants.columnUserId,
+        userId,
+      );
+
+      taskList.value = categoryMapList
+          .map((map) => TaskModel.fromMap(map))
+          .toList();
+    } catch (e) {
+      log('Error fetching tasks by user ID: $e');
+      taskList.clear();
+    }
   }
 
   /// Category → Color mapping

@@ -1,49 +1,46 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../providers/local_database/databse_constants.dart';
+import 'base_model.dart';
 
-class TaskModel {
-  final String? id;
-  final String title;
+class TaskModel implements BaseModel {
+  final String? userId;
+  final int? taskId; // <-- made this int?
+  final String taskTitle;
   final DateTime startTime;
   final DateTime endTime;
   final String category;
 
   TaskModel({
-    this.id,
-    required this.title,
+    this.userId,
+    this.taskId,
+    required this.taskTitle,
     required this.startTime,
     required this.endTime,
     required this.category,
   });
 
-  /// Factory to create from Firebase document
-  factory TaskModel.fromMap(Map<String, dynamic> map, String docId) {
+  /// Create TaskModel from Map (Database)
+  factory TaskModel.fromMap(Map<String, dynamic> map) {
     return TaskModel(
-      id: docId,
-      title: map['title'] ?? '',
-      startTime: (map['startTime'] as Timestamp).toDate(),
-      endTime: (map['endTime'] as Timestamp).toDate(),
-      category: map['category'] ?? 'General',
+      userId: map[DatabaseConstants.columnUserId],
+      taskId: map[DatabaseConstants.columnTaskId] is int
+          ? map[DatabaseConstants.columnTaskId]
+          : int.tryParse(map[DatabaseConstants.columnTaskId].toString()),
+      taskTitle: map[DatabaseConstants.columnTaskTitle] ?? '',
+      startTime: DateTime.parse(map[DatabaseConstants.columnTaskStartTime]),
+      endTime: DateTime.parse(map[DatabaseConstants.columnTaskEndTime]),
+      category: map[DatabaseConstants.columnTaskCategory] ?? 'General',
     );
   }
 
-  /// To send back to Firebase
+  /// Convert TaskModel to Map (for Database)
   Map<String, dynamic> toMap() {
     return {
-      'title': title,
-      'startTime': startTime,
-      'endTime': endTime,
-      'category': category,
-    };
-  }
-
-  /// To convert for API / JSON
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'title': title,
-      'startTime': startTime.toIso8601String(),
-      'endTime': endTime.toIso8601String(),
-      'category': category,
+      DatabaseConstants.columnUserId: userId,
+      DatabaseConstants.columnTaskId: taskId,
+      DatabaseConstants.columnTaskTitle: taskTitle,
+      DatabaseConstants.columnTaskStartTime: startTime.toIso8601String(),
+      DatabaseConstants.columnTaskEndTime: endTime.toIso8601String(),
+      DatabaseConstants.columnTaskCategory: category,
     };
   }
 }

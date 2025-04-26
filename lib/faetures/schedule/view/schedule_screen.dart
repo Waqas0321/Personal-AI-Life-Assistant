@@ -18,6 +18,7 @@ class ScheduleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    controller.onInit();
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
@@ -61,49 +62,32 @@ class ScheduleScreen extends StatelessWidget {
               Gap(12),
             ],
           ),
-          body: Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [AppColors.primary, AppColors.blackish],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
-            child: Padding(
-              padding: appSizes.getCustomPadding(
-                bottom: 1,
-                left: 1,
-                right: 0,
-                top: 0,
-              ),
-              child: Card(
-                elevation: 8,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
-                ),
-                color: Colors.white,
+          body: Column(
+            children: [
+              Gap(8),
+              Expanded(
                 child: Obx(
-                  () => SfCalendar(
+                      () => SfCalendar(
                     backgroundColor: AppColors.white,
                     view: controller.calendarView.value,
                     dataSource: TaskDataSource(
                       controller.taskList
                           .map(
                             (task) => Appointment(
-                              startTime: task.startTime,
-                              endTime: task.endTime,
-                              subject: task.title,
-                              color: controller.getColorForCategory(
-                                task.category,
-                              ),
-                            ),
-                          )
+                          startTime: task.startTime,
+                          endTime: task.endTime,
+                          subject: task.taskTitle,
+                          color: controller.getColorForCategory(
+                            task.category,
+                          ),
+                        ),
+                      )
                           .toList(),
                     ),
                     allowDragAndDrop: true,
                     onDragEnd: (AppointmentDragEndDetails details) {
                       final Appointment? oldAppointment =
-                          details.appointment as Appointment?;
+                      details.appointment as Appointment?;
                       final DateTime? newStart = details.droppingTime;
                       if (oldAppointment != null && newStart != null) {
                         final Appointment newAppointment = Appointment(
@@ -153,7 +137,7 @@ class ScheduleScreen extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
+            ],
           ),
         );
       },

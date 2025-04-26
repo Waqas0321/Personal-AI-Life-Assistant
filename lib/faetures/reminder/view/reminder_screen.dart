@@ -12,7 +12,7 @@ final AppSizes appSizes = AppSizes();
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      body: Center(child: CustomTextWidget(text: "Summeries")),
+      body: Center(child: CustomTextWidget(text: "Reminder")),
     );
   }
 }
