@@ -14,13 +14,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        statusBarColor: AppColors.darkBlue,
+        statusBarColor: AppColors.primary,
         statusBarIconBrightness: Brightness.light,
         statusBarBrightness: Brightness.dark,
       ),
     );
     return GetMaterialApp(
-      title: "LexiLearn",
+      title: "Personal AI Life Assistant",
       debugShowCheckedModeBanner: false,
       theme: AppTheme.lightTheme,
       initialBinding: InitialBindings(),

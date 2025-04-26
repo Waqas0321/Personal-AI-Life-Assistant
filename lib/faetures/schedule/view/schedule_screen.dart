@@ -23,7 +23,6 @@ class ScheduleScreen extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
-          backgroundColor: AppColors.white,
           appBar: CustomAppBar(
             title: controller.greeting.value ?? "Dashboard",
             actionsWidgets: [

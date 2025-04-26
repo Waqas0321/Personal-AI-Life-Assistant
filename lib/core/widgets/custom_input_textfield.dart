@@ -71,7 +71,7 @@ class CustomInputTextFieldState extends State<CustomInputTextField> {
         fontSize: 14,
         color: AppColors.black,
       ),
-      cursorColor: AppColors.orange,
+      cursorColor: AppColors.primary,
       maxLines: widget.maxLines,
       decoration: InputDecoration(
         filled: widget.isFilled,
