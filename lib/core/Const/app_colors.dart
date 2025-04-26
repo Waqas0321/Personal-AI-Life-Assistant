@@ -3,6 +3,7 @@ class AppColors{
 
   static const black = Colors.black;
   static const primary = Color(0xff5a2a7c);
+
   static const white = Colors.white;
   static const  whitish = Color(0xA0EDEBEB);
   static const  whitish2 = Color(0x35EDEBEB);
