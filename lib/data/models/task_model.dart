@@ -1,14 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class TaskModel {
-  final String id;
+  final String? id;
   final String title;
   final DateTime startTime;
   final DateTime endTime;
   final String category;
 
   TaskModel({
-    required this.id,
+    this.id,
     required this.title,
     required this.startTime,
     required this.endTime,
@@ -26,12 +26,23 @@ class TaskModel {
     );
   }
 
-  /// To send back to Firebase (optional)
+  /// To send back to Firebase
   Map<String, dynamic> toMap() {
     return {
       'title': title,
       'startTime': startTime,
       'endTime': endTime,
+      'category': category,
+    };
+  }
+
+  /// To convert for API / JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'title': title,
+      'startTime': startTime.toIso8601String(),
+      'endTime': endTime.toIso8601String(),
       'category': category,
     };
   }

@@ -1,12 +1,13 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_toast_show.dart';
+import 'package:personal_ai_life_assistant/data/providers/firestore_provider.dart';
 import '../../../data/models/task_model.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class TaskController extends GetxController {
   ToastClass toast = ToastClass();
+  FireStoreProvider fireStore = FireStoreProvider();
   final titleController = TextEditingController();
   final categoryList = ['Academics', 'Social', 'Personal', 'Health'];
 
@@ -26,32 +27,29 @@ class TaskController extends GetxController {
   void setCategory(String value) {
     selectedCategory.value = value;
   }
+
   final stt.SpeechToText speech = stt.SpeechToText();
-
-
 
   var isListening = false.obs;
 
   void startListening() async {
     bool available = await speech.initialize();
     if (available) {
-      isListening.value = true; // Start listening
+      isListening.value = true;
       speech.listen(
         onResult: (result) {
           titleController.text = result.recognizedWords;
         },
       );
     } else {
-      Get.snackbar('Error', 'Speech recognition not available');
+      toast.showCustomToast('Speech recognition not available');
     }
   }
 
   void stopListening() {
     speech.stop();
-    isListening.value = false; // Stop listening
+    isListening.value = false;
   }
-
-
 
   Future<void> addTask() async {
     if (titleController.text.trim().isEmpty) {
@@ -62,16 +60,17 @@ class TaskController extends GetxController {
     isLoading.value = true;
 
     try {
-      final doc = FirebaseFirestore.instance.collection('tasks').doc();
       final task = TaskModel(
-        id: doc.id,
         title: titleController.text.trim(),
         startTime: startTime.value,
         endTime: endTime.value,
         category: selectedCategory.value,
       );
-
-      await doc.set(task.toMap());
+      await fireStore.storeDataWithUUID(
+        collectionName: "tasks",
+        data: task,
+        toJson: (p0) => task.toJson(),
+      );
       toast.showCustomToast('Task added successfully');
       clearFields();
     } catch (e) {
@@ -80,6 +79,7 @@ class TaskController extends GetxController {
       isLoading.value = false;
     }
   }
+
   Future<void> pickDateTime(BuildContext context, bool isStartTime) async {
     DateTime? pickedDate = await showDatePicker(
       context: context,
@@ -112,10 +112,9 @@ class TaskController extends GetxController {
     }
   }
 
-
   void clearFields() {
     titleController.clear();
-    selectedCategory.value = 'Work';
+    selectedCategory.value = 'Academics';
     startTime.value = DateTime.now();
     endTime.value = DateTime.now();
   }

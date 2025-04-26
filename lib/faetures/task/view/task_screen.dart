@@ -19,10 +19,7 @@ class TaskScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.white,
       appBar: CustomAppBar(title: "Add Task"),
-      body: Obx(
-            () => controller.isLoading.value
-            ? const Center(child: CircularProgressIndicator())
-            : SingleChildScrollView(
+      body:  SingleChildScrollView(
           padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,14 +149,16 @@ class TaskScreen extends StatelessWidget {
               ),
 
               Gap(AppSizes().getHeightPercentage(10)),
-              CustomElevatedButton(
-                onPress: controller.addTask,
-                text: "Add Task",
+              Obx(
+                () =>  CustomElevatedButton(
+                  isLoading: controller.isLoading.value,
+                  onPress: controller.addTask,
+                  text: "Add Task",
+                ),
               ),
             ],
           ),
         ),
-      ),
     );
   }
 }
