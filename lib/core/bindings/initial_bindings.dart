@@ -31,8 +31,8 @@ class InitialBindings extends Bindings {
     Get.put(ReminderController());
     Get.lazyPut(() => ReminderController());
 
-    Get.put(SummeriesController());
-    Get.lazyPut(() => SummeriesController());
+    Get.put(SummariesController());
+    Get.lazyPut(() => SummariesController());
 
     Get.put(TaskController());
     Get.lazyPut(() => TaskController());

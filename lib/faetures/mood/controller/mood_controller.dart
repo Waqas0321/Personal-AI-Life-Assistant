@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/widgets/custom_toast_show.dart';
-
 
 class MoodController extends GetxController {
   var selectedMood = ''.obs;
@@ -19,7 +19,10 @@ class MoodController extends GetxController {
     {'emoji': '🤩', 'label': 'Excited'},
   ];
 
-  void saveMood() {
+  Future<void> saveMood() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('savedMood', selectedMood.value);
+
     toast.showCustomToast(
       'Your mood "${selectedMood.value}" has been saved successfully!',
     );
@@ -27,5 +30,13 @@ class MoodController extends GetxController {
 
   void clear() {
     selectedMood.value = '';
+  }
+
+  Future<void> loadSavedMood() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? mood = prefs.getString('savedMood');
+    if (mood != null) {
+      selectedMood.value = mood;
+    }
   }
 }

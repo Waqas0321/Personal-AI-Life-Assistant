@@ -11,7 +11,7 @@ class BottomNavController extends GetxController {
     ScheduleScreen(),
     TaskListScreen(),
     ReminderScreen(),
-    SummeriesScreen(),
+    SummariesScreen(),
   ];
 }
 
