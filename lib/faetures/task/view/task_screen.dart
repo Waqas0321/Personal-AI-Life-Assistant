@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:personal_ai_life_assistant/core/utils/app_sizes.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_appbar.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_elevated_button.dart';
+import 'package:personal_ai_life_assistant/core/widgets/custom_text_widget.dart';
 import '../../../core/Const/app_colors.dart';
 import '../../../core/widgets/custom_input_textfield.dart';
 import '../controller/task_controller.dart';
@@ -16,7 +18,7 @@ class TaskScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: CustomAppBar(title: "Add Task",),
+      appBar: CustomAppBar(title: "Add Task"),
       body: Obx(
             () => controller.isLoading.value
             ? const Center(child: CircularProgressIndicator())
@@ -25,20 +27,42 @@ class TaskScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CustomInputTextField(
-                hintText: 'Enter task title',
-                labelText: 'Title',
-                textEditingController: controller.titleController,
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomInputTextField(
+                      hintText: 'Enter task title',
+                      labelText: 'Title',
+                      textEditingController: controller.titleController,
+                    ),
+                  ),
+                  Gap(12),
+                  GestureDetector(
+                    onTap: () {
+                      controller.startListening();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.primary,
+                        shape: BoxShape.circle,
+                      ),
+                      child: IconButton(
+                        icon: Icon(Icons.mic, color: Colors.white),
+                        onPressed: () {
+                          // your mic logic here
+                        },
+                      ),
+                    ),
+                  )
+                ],
               ),
-              const SizedBox(height: 20),
-
-              Text(
-                'Start Time',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+             Gap(12),
+              CustomTextWidget(
+                text: 'Start Time',
               ),
-              const SizedBox(height: 6),
+             Gap(3),
               InkWell(
-                onTap: () =>controller.pickDateTime(context, true),
+                onTap: () => controller.pickDateTime(context, true),
                 child: Container(
                   width: double.infinity,
                   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
@@ -55,13 +79,12 @@ class TaskScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+             Gap(12),
 
-              Text(
-                'End Time',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              CustomTextWidget(
+                text: 'End Time',
               ),
-              const SizedBox(height: 6),
+              Gap(3),
               InkWell(
                 onTap: () => controller.pickDateTime(context, false),
                 child: Container(
@@ -80,13 +103,12 @@ class TaskScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+             Gap(12),
 
-              Text(
-                'Category',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+              CustomTextWidget(
+                text: 'Category',
               ),
-              const SizedBox(height: 6),
+              Gap(3),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
@@ -111,8 +133,12 @@ class TaskScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Gap(40),
-              CustomElevatedButton(onPress: controller.addTask, text: "Add Task")
+
+              Gap(AppSizes().getHeightPercentage(10)),
+              CustomElevatedButton(
+                onPress: controller.addTask,
+                text: "Add Task",
+              ),
             ],
           ),
         ),

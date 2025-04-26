@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:personal_ai_life_assistant/core/widgets/custom_toast_show.dart';
 import '../../../data/models/task_model.dart';
+import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 class TaskController extends GetxController {
   ToastClass toast = ToastClass();
@@ -25,6 +26,21 @@ class TaskController extends GetxController {
   void setCategory(String value) {
     selectedCategory.value = value;
   }
+  final stt.SpeechToText speech = stt.SpeechToText();
+
+  void startListening() async {
+    bool available = await speech.initialize();
+    if (available) {
+      speech.listen(
+        onResult: (result) {
+          titleController.text = result.recognizedWords;
+        },
+      );
+    } else {
+      Get.snackbar('Error', 'Speech recognition not available');
+    }
+  }
+
 
   Future<void> addTask() async {
     if (titleController.text.trim().isEmpty) {
