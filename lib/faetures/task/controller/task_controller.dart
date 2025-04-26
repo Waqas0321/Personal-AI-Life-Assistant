@@ -28,9 +28,14 @@ class TaskController extends GetxController {
   }
   final stt.SpeechToText speech = stt.SpeechToText();
 
+
+
+  var isListening = false.obs;
+
   void startListening() async {
     bool available = await speech.initialize();
     if (available) {
+      isListening.value = true; // Start listening
       speech.listen(
         onResult: (result) {
           titleController.text = result.recognizedWords;
@@ -40,6 +45,12 @@ class TaskController extends GetxController {
       Get.snackbar('Error', 'Speech recognition not available');
     }
   }
+
+  void stopListening() {
+    speech.stop();
+    isListening.value = false; // Stop listening
+  }
+
 
 
   Future<void> addTask() async {

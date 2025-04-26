@@ -37,23 +37,40 @@ class TaskScreen extends StatelessWidget {
                     ),
                   ),
                   Gap(12),
-                  GestureDetector(
-                    onTap: () {
-                      controller.startListening();
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.primary,
-                        shape: BoxShape.circle,
-                      ),
-                      child: IconButton(
-                        icon: Icon(Icons.mic, color: Colors.white),
-                        onPressed: () {
-                          // your mic logic here
-                        },
+                  Obx(
+                        () => GestureDetector(
+                      onLongPressStart: (_) {
+                        controller.startListening();
+                      },
+                      onLongPressEnd: (_) {
+                        controller.stopListening();
+                      },
+                      child: Container(
+                        width: 50,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: controller.isListening.value ? Colors.red : AppColors.primary,
+                          shape: BoxShape.circle,
+                          boxShadow: [
+                            if (controller.isListening.value)
+                              BoxShadow(
+                                color: Colors.redAccent.withOpacity(0.6),
+                                blurRadius: 15,
+                                spreadRadius: 5,
+                              ),
+                          ],
+                        ),
+                        child: Center(
+                          child: Icon(
+                            controller.isListening.value ? Icons.mic : Icons.mic_none,
+                            color: Colors.white,
+                            size: 35,
+                          ),
+                        ),
                       ),
                     ),
-                  )
+                  ),
+
                 ],
               ),
              Gap(12),
