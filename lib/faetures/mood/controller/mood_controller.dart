@@ -10,6 +10,15 @@ class MoodController extends GetxController {
     selectedMood.value = mood;
   }
 
+  final List<Map<String, dynamic>> moods = [
+    {'emoji': '😊', 'label': 'Happy'},
+    {'emoji': '😐', 'label': 'Neutral'},
+    {'emoji': '😢', 'label': 'Sad'},
+    {'emoji': '😡', 'label': 'Angry'},
+    {'emoji': '😴', 'label': 'Tired'},
+    {'emoji': '🤩', 'label': 'Excited'},
+  ];
+
   void saveMood() {
     toast.showCustomToast(
       'Your mood "${selectedMood.value}" has been saved successfully!',

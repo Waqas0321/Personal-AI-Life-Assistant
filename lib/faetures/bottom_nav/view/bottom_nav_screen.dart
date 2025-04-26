@@ -37,7 +37,7 @@ class BottomNavScreen extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Obx(
                 () => Image.asset(
-                  AppImages.home,
+                  AppImages.schedule,
                   color:
                       navController.currentIndex.value == 0
                           ? AppColors.primary
@@ -51,7 +51,7 @@ class BottomNavScreen extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Obx(
                 () => Image.asset(
-                  AppImages.home,
+                  AppImages.tasks,
                   color:
                       navController.currentIndex.value == 1
                           ? AppColors.primary
@@ -65,7 +65,7 @@ class BottomNavScreen extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Obx(
                 () => Image.asset(
-                  AppImages.home,
+                  AppImages.mood,
                   color:
                       navController.currentIndex.value == 2
                           ? AppColors.primary
@@ -79,7 +79,7 @@ class BottomNavScreen extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Obx(
                 () => Image.asset(
-                  AppImages.home,
+                  AppImages.reminder,
                   color:
                       navController.currentIndex.value == 3
                           ? AppColors.primary
@@ -93,7 +93,7 @@ class BottomNavScreen extends StatelessWidget {
             BottomNavigationBarItem(
               icon: Obx(
                 () => Image.asset(
-                  AppImages.home,
+                  AppImages.summeries,
                   color:
                       navController.currentIndex.value == 4
                           ? AppColors.primary

@@ -15,6 +15,7 @@ class TaskScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.white,
       appBar: CustomAppBar(title: "Add Task",),
       body: Obx(
             () => controller.isLoading.value
