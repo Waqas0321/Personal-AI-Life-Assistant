@@ -10,7 +10,7 @@ class CustomElevatedButton extends StatelessWidget {
     this.height = 50,
     this.width = double.infinity,
     this.borderRadius = 13,
-    this.backgroundColor = AppColors.orange,
+    this.backgroundColor = AppColors.primary,
     this.textColor = AppColors.white,
     this.isLoading = false,
   });

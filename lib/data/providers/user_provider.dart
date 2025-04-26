@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 
 import '../shared_preference/shared_preference_services.dart';
 
-class UserRepository {
+class UserProvider {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final ToastClass toast = ToastClass();
 

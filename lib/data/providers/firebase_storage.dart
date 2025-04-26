@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 
-class StorageRepository {
+class StorageProvider {
   final FirebaseStorage storage = FirebaseStorage.instance;
   RxString imageUrl = ''.obs;
 

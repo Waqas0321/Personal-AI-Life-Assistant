@@ -21,7 +21,7 @@ class ImagePickerHelper {
       Container(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 2),
         decoration: const BoxDecoration(
-            color: AppColors.blue,
+            color: AppColors.primary,
             borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
             boxShadow: [
               BoxShadow(

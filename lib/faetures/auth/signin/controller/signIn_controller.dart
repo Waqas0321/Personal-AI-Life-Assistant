@@ -3,14 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import '../../../../core/app_routes/routes.dart';
 import '../../../../core/widgets/custom_toast_show.dart';
-import '../../../../data/providers/user_repository.dart';
+import '../../../../data/providers/user_provider.dart';
 
 class SignInController extends GetxController {
   ToastClass toast = ToastClass();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  UserRepository auth = UserRepository();
+  UserProvider auth = UserProvider();
   RxBool isLoading = false.obs;
 
   Future<void> userSignIn() async {

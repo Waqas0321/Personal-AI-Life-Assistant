@@ -83,23 +83,27 @@ class SignInScreen extends StatelessWidget {
                             text: "SIGN IN"),
                       ),
                       Gap(appSizes.getHeightPercentage(6)),
-                      SizedBox(
-                          width: appSizes.getWidthPercentage(70),
-                          child: const Divider(
-                            thickness: 0.5,
-                          )),
-                      const Gap(12),
-                      const CustomTextWidget(
-                        text: "Don't have any account?",
-                        fontSize: 15,
-                        textColor: AppColors.white,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          const CustomTextWidget(
+                            text: "Don't have any account?",
+                            fontSize: 12,
+                            textColor: AppColors.blackish,
+                          ),
+                          Gap(4),
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed(AppRoutes.SIGNUPSCREEN);
+                            },
+                            child: const CustomTextWidget(
+                              text: "Create account",
+                              fontSize: 13,
+                              textColor: AppColors.primary,
+                            ),
+                          ),
+                        ],
                       ),
-                      const Gap(12),
-                      CustomOutlineButton(
-                          onPress: () {
-                            Get.toNamed(AppRoutes.SIGNUPSCREEN);
-                          },
-                          text: "Create a new account"),
                     ],
                   ),
                 ),

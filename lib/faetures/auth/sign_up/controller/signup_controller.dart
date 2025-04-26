@@ -7,18 +7,18 @@ import '../../../../core/app_routes/routes.dart';
 import '../../../../core/widgets/custom_toast_show.dart';
 import '../../../../data/models/user_model.dart';
 import '../../../../data/providers/firebase_storage.dart';
-import '../../../../data/providers/firestore_repository.dart';
+import '../../../../data/providers/firestore_provider.dart';
 import '../../../../data/providers/image_picker.dart';
-import '../../../../data/providers/user_repository.dart';
+import '../../../../data/providers/user_provider.dart';
 import '../../../../data/shared_preference/shared_preference_services.dart';
 
 class SignUpController extends GetxController {
   ImagePickerHelper imagePicker = ImagePickerHelper();
   ToastClass toast = ToastClass();
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  UserRepository auth = UserRepository();
-  FireStoreRepository fireStore = FireStoreRepository();
-  StorageRepository storage = StorageRepository();
+  UserProvider auth = UserProvider();
+  FireStoreProvider fireStore = FireStoreProvider();
+  StorageProvider storage = StorageProvider();
 
   final TextEditingController firstNameController = TextEditingController();
   final TextEditingController lastNameController = TextEditingController();

@@ -3,7 +3,7 @@ import 'package:uuid/uuid.dart';
 import '../../core/widgets/custom_toast_show.dart';
 import '../shared_preference/shared_preference_services.dart';
 
-class FireStoreRepository {
+class FireStoreProvider {
   final FirebaseFirestore fireStore = FirebaseFirestore.instance;
   final ToastClass toast = ToastClass();
   static const Uuid uuid = Uuid();

@@ -7,7 +7,6 @@ import '../../../../core/const/app_images.dart';
 import '../../../../core/utils/app_sizes.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 import '../../../../core/widgets/custom_input_textfield.dart';
-import '../../../../core/widgets/custom_outline_button.dart';
 import '../../../../core/widgets/custom_text_widget.dart';
 import '../controller/signup_controller.dart';
 
@@ -40,7 +39,7 @@ class SignUpScreen extends StatelessWidget {
                                 shape: BoxShape.circle,
                                 border: Border.all(
                                   width: 0.5,
-                                  color: AppColors.white,
+                                  color: AppColors.primary,
                                 ),
                                 image: controller.imagePicker.selectedImage
                                                 .value ==
@@ -66,7 +65,6 @@ class SignUpScreen extends StatelessWidget {
                                           child: Image.asset(
                                             AppImages.logo,
                                             fit: BoxFit.cover,
-                                            color: AppColors.whitish,
                                           ),
                                         ),
                                       )
@@ -80,7 +78,7 @@ class SignUpScreen extends StatelessWidget {
                                     alignment: Alignment.bottomRight,
                                     child: Container(
                                       decoration: const BoxDecoration(
-                                        color: AppColors.blue,
+                                        color: AppColors.primary,
                                         shape: BoxShape.circle,
                                       ),
                                       padding: const EdgeInsets.all(2),
@@ -236,25 +234,28 @@ class SignUpScreen extends StatelessWidget {
                               },
                               text: "SIGN UP"),
                         ),
-                        const Gap(23),
-                        SizedBox(
-                            width: appSizes.getWidthPercentage(70),
-                            child: const Divider(
-                              thickness: 0.5,
-                            )),
-                        const Gap(12),
-                        const CustomTextWidget(
-                          text: "Already have an account?",
-                          fontSize: 15,
-                          textColor: AppColors.white,
+                        Gap(appSizes.getHeightPercentage(2)),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const CustomTextWidget(
+                              text: "Already have an account?",
+                              fontSize: 12,
+                              textColor: AppColors.blackish,
+                            ),
+                            Gap(4),
+                            GestureDetector(
+                              onTap: () {
+                                Get.toNamed(AppRoutes.SIGNINSCREEN);
+                              },
+                              child: const CustomTextWidget(
+                                text: "Sign In",
+                                fontSize: 13,
+                                textColor: AppColors.primary,
+                              ),
+                            ),
+                          ],
                         ),
-                        const Gap(12),
-                        CustomOutlineButton(
-                            onPress: () {
-                              Get.toNamed(AppRoutes.SIGNINSCREEN);
-                            },
-                            text: "Sing in Now"),
-                        const Gap(6),
                       ],
                     ),
                   ),
