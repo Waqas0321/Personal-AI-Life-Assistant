@@ -9,6 +9,9 @@ import '../../../data/shared_preference/shared_preference_services.dart';
 
 class ScheduleController extends GetxController {
   var selectedMood = ''.obs;
+  var userImagePath = ''.obs;
+  var userImageUrl = ''.obs;
+
 
   void selectMood(String mood) async {
     selectedMood.value = mood;

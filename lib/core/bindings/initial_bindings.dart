@@ -6,6 +6,7 @@ import 'package:personal_ai_life_assistant/faetures/task/tasks_list/controller/t
 import '../../faetures/auth/forget_password/controller/forget_password_controller.dart';
 import '../../faetures/auth/sign_up/controller/signup_controller.dart';
 import '../../faetures/auth/signin/controller/signIn_controller.dart';
+import '../../faetures/profile/controller/profile_controller.dart';
 import '../../faetures/schedule/controllers/schedule_controller.dart';
 import '../../faetures/splash/controllers/splash_controller.dart';
 import '../../faetures/task/add_tasks/controller/task_controller.dart';
@@ -42,5 +43,9 @@ class InitialBindings extends Bindings {
 
     Get.put(BottomNavController());
     Get.lazyPut(() => BottomNavController());
+
+    Get.put(ProfileController());
+    Get.lazyPut(() => ProfileController());
   }
-}
+  }
+
