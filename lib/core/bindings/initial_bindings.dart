@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:personal_ai_life_assistant/faetures/bottom_nav/controller/bottomNav_controller.dart';
+import 'package:personal_ai_life_assistant/faetures/task/controller/task_controller.dart';
 import '../../faetures/auth/forget_password/controller/forget_password_controller.dart';
 import '../../faetures/auth/sign_up/controller/signup_controller.dart';
 import '../../faetures/auth/signin/controller/signIn_controller.dart';
@@ -28,6 +29,9 @@ class InitialBindings extends Bindings {
 
     Get.put(ScheduleController());
     Get.lazyPut(() => ScheduleController());
+
+    Get.put(TaskController());
+    Get.lazyPut(() => TaskController());
 
     Get.put(BottomNavController());
     Get.lazyPut(() => BottomNavController());
