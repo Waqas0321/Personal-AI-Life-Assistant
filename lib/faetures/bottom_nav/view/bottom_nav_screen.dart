@@ -15,6 +15,7 @@ class BottomNavScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Obx(() => navController.screens[navController.currentIndex.value]),
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primary,
@@ -24,7 +25,7 @@ class BottomNavScreen extends StatelessWidget {
         },
         child: const Icon(Icons.add, color: Colors.white, size: 30),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked, // Keeps it fixed at the bottom
       bottomNavigationBar: BottomAppBar(
         color: AppColors.primary,
         shape: const CircularNotchedRectangle(),
