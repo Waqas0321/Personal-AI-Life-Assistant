@@ -1,7 +1,9 @@
+import 'dart:async';
 import 'dart:developer';
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import '../../../core/Const/app_colors.dart';
 import '../../../core/widgets/custom_toast_show.dart';
 import '../../../data/models/task_model.dart';
 import '../../../data/providers/local_database/database_helper.dart';
@@ -52,38 +54,53 @@ class ReminderController extends GetxController {
   }
 
   void showNotification(String title, String body) {
-    AwesomeNotifications().createNotification(
-      content: NotificationContent(
-        id: 10,
-        autoDismissible: true,
-        channelKey: 'basic_channel',
-        title: title,
-        body: body,
-      ),
-    );
+    AwesomeNotifications()
+        .createNotification(
+          content: NotificationContent(
+            id: 10,
+            autoDismissible: true,
+            channelKey: 'basic_channel',
+            title: title,
+            body: body,
+          ),
+        )
+        .then((value) {
+          Get.snackbar(
+            title,
+            body,
+            backgroundColor: AppColors.black,
+            colorText: AppColors.white,
+          );
+        });
   }
 
+  Timer? notificationTimer;
+
   void startNotificationScheduler() {
-    final now = DateTime.now();
-    for (var task in tasksList) {
-      final startTime = task.startTime;
-      final startDate = DateTime(
-        startTime.year,
-        startTime.month,
-        startTime.day,
-        startTime.hour,
-        startTime.minute,
-      );
-      if (startDate.isBefore(now.add(Duration(seconds: 60))) &&
-          startDate.isAfter(now.subtract(Duration(seconds: 60)))) {
-        showNotification(
-          task.taskTitle,
-          "${DateFormat('yyyy-MM-dd HH:mm').format(task.startTime)} - ${DateFormat('yyyy-MM-dd HH:mm').format(task.endTime)}",
+    notificationTimer = Timer.periodic(Duration(seconds: 60), (_) {
+      final now = DateTime.now();
+      for (var task in tasksList) {
+        final startTime = task.startTime;
+        final startDate = DateTime(
+          startTime.year,
+          startTime.month,
+          startTime.day,
+          startTime.hour,
+          startTime.minute,
         );
+        if (startDate.isBefore(now.add(Duration(seconds: 60))) &&
+            startDate.isAfter(now.subtract(Duration(seconds: 60)))) {
+          showNotification(
+            task.taskTitle,
+            "${DateFormat('yyyy-MM-dd HH:mm').format(task.startTime)} - ${DateFormat('yyyy-MM-dd HH:mm').format(task.endTime)}",
+          );
+        }
       }
-    }
-    Future.delayed(Duration(seconds: 60), () {
-      startNotificationScheduler();
     });
   }
+
+  void stopNotificationScheduler() {
+    notificationTimer?.cancel();
+  }
+
 }
