@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:personal_ai_life_assistant/faetures/bottom_nav/controller/bottomNav_controller.dart';
+import 'package:personal_ai_life_assistant/faetures/check_list/controller/check_list_controller.dart';
 import 'package:personal_ai_life_assistant/faetures/reminder/controller/reminder_controller.dart';
 import 'package:personal_ai_life_assistant/faetures/summeries/controller/summeries_controller.dart';
 import 'package:personal_ai_life_assistant/faetures/task/tasks_list/controller/tasks_list_controller.dart';
@@ -46,6 +47,13 @@ class InitialBindings extends Bindings {
 
     Get.put(ProfileController());
     Get.lazyPut(() => ProfileController());
+
+    Get.put(ChecklistController());
+    Get.lazyPut(() => ChecklistController());
+
+    Get.put(SummariesController());
+    Get.lazyPut(() => SummariesController());
+
   }
   }
 

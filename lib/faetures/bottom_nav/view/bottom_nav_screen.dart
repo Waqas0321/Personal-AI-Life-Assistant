@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:get/get.dart';
 import 'package:personal_ai_life_assistant/core/app_routes/routes.dart';
-import 'package:personal_ai_life_assistant/core/widgets/custom_text_widget.dart';
 import '../../../core/Const/app_colors.dart';
 import '../../../core/Const/app_images.dart';
+import '../../../core/widgets/custom_bottom_nav_item.dart';
 import '../controller/bottomNav_controller.dart';
 
 class BottomNavScreen extends StatelessWidget {
@@ -84,56 +84,6 @@ class BottomNavScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class BottomNavItem extends StatelessWidget {
-  final int index;
-  final String iconPath;
-  final String label;
-  final RxInt currentIndex;
-  final Color selectedColor;
-  final Color unselectedColor;
-
-  const BottomNavItem({
-    Key? key,
-    required this.index,
-    required this.iconPath,
-    required this.label,
-    required this.currentIndex,
-    required this.selectedColor,
-    required this.unselectedColor,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        currentIndex.value = index;
-      },
-      child: Obx(() {
-        final isSelected = currentIndex.value == index;
-        return Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              iconPath,
-              color: isSelected ? Colors.white : Colors.white.withOpacity(0.7),
-              height: 24,
-              width: 24,
-            ),
-            const SizedBox(height: 6),
-            CustomTextWidget(
-              text: label,
-              fontSize: 11,
-              textColor:
-                  isSelected ? Colors.white : Colors.white.withOpacity(0.7),
-            ),
-          ],
-        );
-      }),
     );
   }
 }

@@ -10,8 +10,6 @@ import '../../../core/widgets/custom_text_widget.dart';
 import '../../../data/models/user_model.dart';
 import '../controller/profile_controller.dart';
 
-
-
 class ProfileScreen extends StatelessWidget {
   ProfileScreen({super.key});
 
@@ -23,22 +21,21 @@ class ProfileScreen extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         return Scaffold(
-          appBar: const CustomAppBar(
-            goBack: true,
-            title: "Profile",
-          ),
+          appBar: const CustomAppBar(goBack: true, title: "Profile"),
           body: StreamBuilder(
             stream: controller.getUserStream(),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
-                    child: CircularProgressIndicator(color: AppColors.primary));
+                  child: CircularProgressIndicator(color: AppColors.primary),
+                );
               } else if (!snapshot.hasData) {
                 return const Center(
-                    child: CustomTextWidget(
-                      text: "User not found",
-                      textColor: AppColors.primary,
-                    ));
+                  child: CustomTextWidget(
+                    text: "User not found",
+                    textColor: AppColors.primary,
+                  ),
+                );
               } else {
                 UserModel? user = snapshot.data;
                 return Padding(
@@ -48,9 +45,10 @@ class ProfileScreen extends StatelessWidget {
                       const Gap(6),
                       CircleAvatar(
                         radius: 44,
-                        backgroundImage: user!.imagePath!.isEmpty
-                            ? AssetImage(AppImages.logo)
-                            : NetworkImage(user.imagePath!),
+                        backgroundImage:
+                            user!.imagePath!.isEmpty
+                                ? AssetImage(AppImages.logo)
+                                : NetworkImage(user.imagePath!),
                       ),
                       const Gap(12),
                       CustomTextWidget(
@@ -97,10 +95,11 @@ class ProfileScreen extends StatelessWidget {
                       ),
                       Spacer(),
                       CustomOutlineButton(
-                          onPress: () async{
-                            await controller.auth.signOut();
-                          },
-                          text: "Sign Out")
+                        onPress: () async {
+                          await controller.auth.signOut();
+                        },
+                        text: "Sign Out",
+                      ),
                     ],
                   ),
                 );

@@ -102,5 +102,4 @@ class ReminderController extends GetxController {
   void stopNotificationScheduler() {
     notificationTimer?.cancel();
   }
-
 }

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:personal_ai_life_assistant/faetures/reminder/view/reminder_screen.dart';
 import 'package:personal_ai_life_assistant/faetures/summeries/view/summeries_screen.dart';

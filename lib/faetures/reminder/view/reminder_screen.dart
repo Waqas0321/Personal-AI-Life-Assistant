@@ -9,10 +9,13 @@ import '../../../core/Const/app_images.dart';
 import '../../../core/widgets/custom_appbar.dart';
 import '../../../core/widgets/custom_text_widget.dart';
 import '../../../data/models/task_model.dart';
+
 class ReminderScreen extends StatelessWidget {
- ReminderScreen({super.key});
-final ReminderController controller = Get.find();
-final AppSizes appSizes = AppSizes();
+  ReminderScreen({super.key});
+
+  final ReminderController controller = Get.find();
+  final AppSizes appSizes = AppSizes();
+
   @override
   Widget build(BuildContext context) {
     controller.onInit();

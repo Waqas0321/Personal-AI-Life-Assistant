@@ -7,4 +7,5 @@ class AppRoutes{
   static const String BOTTOMNAVSCREEN = "/bottomNavScreen";
   static const String HOMESCREEN = "/homeScreen";
   static const String ADDTASKSCREEN = "/addTaskScreen";
+  static const String CHECKLISTSCREEN = "/checkListScreen";
 }
